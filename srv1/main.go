@@ -3,10 +3,10 @@ package main
 import (
 	"context"
 	"fmt"
-	log "github.com/micro/go-micro/v2/logger"
-	pb "micro-hello/proto/hello"
-
 	"github.com/micro/go-micro/v2"
+	"github.com/micro/go-micro/v2/registry"
+	"github.com/micro/go-plugins/registry/consul/v2"
+	pb "micro-hello/proto/hello"
 )
 
 type Handler struct {
@@ -24,23 +24,16 @@ func main() {
 
 	//声明服务
 	srv := micro.NewService(
-		micro.Name("hello.srv1"),
+
+		micro.Registry(consul.NewRegistry(
+			registry.Addrs("101.200.129.72:8500"),
+		)),
+		micro.Name("hello.srv1.01"),
 		micro.Version("latest"),
 	)
 
-
 	//初始化
-	srv.Init(
-		micro.BeforeStart(func() error {
-			log.Log(1)
-			return nil
-		}),
-
-		micro.AfterStart(func() error {
-			log.Log(2)
-			return nil
-		}),
-	)
+	srv.Init()
 
 	//注册Handler
 	h := Handler{}

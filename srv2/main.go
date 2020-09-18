@@ -3,17 +3,20 @@ package main
 import (
 	"context"
 	"fmt"
+	"github.com/micro/go-micro/v2/registry"
 	pb "micro-hello/proto/hello"
 	"time"
-
+	"github.com/micro/go-plugins/registry/consul/v2"
 	"github.com/micro/go-micro/v2"
 )
 
 func main() {
 	srv := micro.NewService(
 
-		micro.Address("127.0.0.1:6789"),
 		micro.Name("hello.srv2"),
+		micro.Registry(consul.NewRegistry(
+			registry.Addrs("101.200.129.72:8500"),
+			)),
 	)
 
 	client := pb.NewHelloService("hello.srv1", srv.Client())
