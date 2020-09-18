@@ -7,6 +7,7 @@ import (
 	"github.com/micro/go-micro/v2/registry"
 	"github.com/micro/go-plugins/registry/consul/v2"
 	pb "micro-hello/proto/hello"
+	"time"
 )
 
 type Handler struct {
@@ -30,6 +31,10 @@ func main() {
 		)),
 		micro.Name("hello.srv1.01"),
 		micro.Version("latest"),
+
+
+		micro.RegisterTTL(time.Second*30),
+		micro.RegisterInterval(time.Second*10),
 	)
 
 	//初始化

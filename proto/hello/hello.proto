@@ -2,8 +2,6 @@ syntax = "proto3";
 
 package microhello;
 
-option go_package    = "proto/hello";
-
 service Hello {
   rpc Greeter(Request) returns (Response) {}
 }
