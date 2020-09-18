@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package microhello;
+
+option go_package    = "proto/hello";
+
+service Hello {
+  rpc Greeter(Request) returns (Response) {}
+}
+
+message Request {
+  string msg = 1;
+}
+
+message Response {
+  string msg = 1;
+}
